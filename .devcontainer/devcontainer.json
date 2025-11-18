@@ -1,25 +1,21 @@
 {
-  "name": "Essentials Notebook",
+  "name": "Python + SQL Server Notebook",
   "image": "mcr.microsoft.com/devcontainers/python:3.11",
 
-  "postCreateCommand": "pip install -r requirements.txt",
+  // Install OS-level stuff like ODBC drivers
+  "updateContentCommand": "bash .devcontainer/install_sql.sh",
 
-  "features": {
-    "ghcr.io/devcontainers/features/common-utils:2": {}
-  },
+  // 🔥 Create venv → activate it → install requirements
+  "postCreateCommand": "python3 -m venv .venv && . .venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt",
 
   "customizations": {
     "vscode": {
-      "extensions": [
-        "ms-python.python",
-        "ms-toolsai.jupyter"
-      ],
       "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+        "python.pythonPath": "${workspaceFolder}/.venv/bin/python",
         "python.envFile": "${workspaceFolder}/.env"
-      }
+      },
+      "extensions": ["ms-python.python", "ms-toolsai.jupyter"]
     }
-  },
-
-  // 🔥 This runs AS ROOT before installing pip packages
-  "updateContentCommand": "bash
+  }
+}
