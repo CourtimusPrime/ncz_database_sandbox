@@ -2,29 +2,24 @@
   "name": "Essentials Notebook",
   "image": "mcr.microsoft.com/devcontainers/python:3.11",
 
-  // Install your Python deps automatically
   "postCreateCommand": "pip install -r requirements.txt",
 
-  // Load .env automatically for Jupyter and shell
   "features": {
-    "ghcr.io/devcontainers/features/common-utils:2": {
-      "installZsh": false,
-      "installOhMyZsh": false
-    }
+    "ghcr.io/devcontainers/features/common-utils:2": {}
   },
 
   "customizations": {
     "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter"
+      ],
       "settings": {
         "python.defaultInterpreterPath": "/usr/local/bin/python",
-        "python.pythonPath": "/usr/local/bin/python",
-        "python.envFile": "${workspaceFolder}/.env",
-        "jupyter.notebookFileRoot": "${workspaceFolder}"
-      },
-      "extensions": ["ms-toolsai.jupyter", "ms-python.python"]
+        "python.envFile": "${workspaceFolder}/.env"
+      }
     }
   },
 
-  // Start the server automatically when Codespace boots
-  "postStartCommand": "jupyter lab --ip=0.0.0.0 --port=8888 --no-browser"
-}
+  // 🔥 This runs AS ROOT before installing pip packages
+  "updateContentCommand": "bash
